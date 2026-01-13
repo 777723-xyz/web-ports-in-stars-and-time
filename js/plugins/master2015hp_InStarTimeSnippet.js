@@ -2581,7 +2581,7 @@ Game_System.prototype.schoiceTakeOut = function(index, noSearchJPN) {
 Game_System.prototype.schoiceGetJpnVersion = function(txt) {
 	let res = '';
 	if (txt) {
-		res = $dataTranslations["cmd"][JSON.parse(JSON.stringify(txt))];
+		res = window.$dataTranslations["cmd"][JSON.parse(JSON.stringify(txt))];
 	}
 	return res;
 };
