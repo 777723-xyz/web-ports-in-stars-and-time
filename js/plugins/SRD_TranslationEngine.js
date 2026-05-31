@@ -400,8 +400,6 @@ Imported["SumRndmDde Translation Engine"] = 1.04;
 // $dataTranslations is the variable counterpart of "Translations.json"
 //-----------------------------------------------------------------------------
 
-var $dataTranslations = window.$dataTranslations;
-
 //-----------------------------------------------------------------------------
 // Init classes
 //-----------------------------------------------------------------------------
@@ -574,7 +572,7 @@ $.applyUpdateFields = function(data, updateFields) {
 $.defineDataField = function(data, field, defaultField) {
 	Object.defineProperty(data, field, {
 		get: function() {
-			if(false) return defaultField;
+			if(ConfigManager.isDefaultLanguage()) return defaultField;
 			var lang = ConfigManager.getLanguage();
 			var fields = data._tt_translations[lang];
 			if(!fields) return defaultField;
@@ -681,7 +679,7 @@ $.termsInfo = [
 //-----------------------------------------------------------------------------
 
 $.translate = function(text) {
-	if(false) return text;
+	if(ConfigManager.isDefaultLanguage()) return text;
 	var lang = ConfigManager.getLanguage();
 	var data = $dataTranslations['custom'][lang];
 	if(!data) return text;
@@ -1592,7 +1590,7 @@ Scene_Boot.prototype.updateDocumentTitle = function() {
 $.Game_Message_allText = Game_Message.prototype.allText;
 Game_Message.prototype.allText = function() {
 	if(this._texts.length === 0) return '';
-	if(false) return $.Game_Message_allText.apply(this, arguments);
+	if(ConfigManager.isDefaultLanguage()) return $.Game_Message_allText.apply(this, arguments);
 	var lang = ConfigManager.getLanguage();
 	var text = $.Game_Message_allText.apply(this, arguments);
 	var data = $dataTranslations['msg'];
@@ -1605,7 +1603,7 @@ Game_Message.prototype.allText = function() {
 
 $.Game_Message_choices = Game_Message.prototype.choices;
 Game_Message.prototype.choices = function() {
-	if(false) return $.Game_Message_choices.apply(this, arguments);
+	if(ConfigManager.isDefaultLanguage()) return $.Game_Message_choices.apply(this, arguments);
 	var lang = ConfigManager.getLanguage();
 	var choices = $.Game_Message_choices.apply(this, arguments);
 	var data = $dataTranslations['cmd'];

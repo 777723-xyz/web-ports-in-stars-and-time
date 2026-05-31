@@ -248,7 +248,7 @@ var RG19 = RG19 || {};			// RG19's main object
 	ImageManager.loadBitmap = function(folder, filename, hue, smooth)
 	{
 		// Replace Japanese names
-		if(true)
+		if(false)
 		{
 			if (filename == "オプション") filename = "Options"; else
 			if (filename == "クラフト") filename = "Craft"; else
@@ -264,16 +264,6 @@ var RG19 = RG19 || {};			// RG19's main object
 			filename = "I_hey____1[BUST]";
 
 
-		if(true && filename.match(/_\[Original\]$/))
-		{
-			var lang = ConfigManager.getLanguage();
-			var name = filename.slice(0, -11) + '_[' + lang + ']';
-			try {
-				return _ImageManager_loadBitmap.call(this, folder, name, hue, smooth);
-			} catch(e) {
-				return _ImageManager_loadBitmap.call(this, folder, filename, hue, smooth);
-			}
-		}
 		return _ImageManager_loadBitmap.call(this, folder, filename, hue, smooth);
 	};
 
@@ -294,10 +284,10 @@ var RG19 = RG19 || {};			// RG19's main object
 		this.firstBoot = config['firstBoot'] != undefined ? !!config['firstBoot'] : true;
 	};
 
+	var _ConfigManager_getLanguage = ConfigManager.getLanguage;
 	ConfigManager.getLanguage = function()
 	{
-		this.language = 0;
-		return "Original";
+		return "EN";
 	};
 
 	var _SceneManager_goto = SceneManager.goto;

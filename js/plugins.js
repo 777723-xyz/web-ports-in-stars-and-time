@@ -29,7 +29,7 @@ var $plugins =
 {"name":"No Autoshadow","status":true,"description":"Removes automatic shadows from displaying in game.","parameters":{}},
 {"name":"HIME_PreTitleEvents","status":true,"description":"Build your own sequence of events that should occur before\r\nthe title screen begins","parameters":{"Pre-Title Map ID":"6","Use As Title":"false"}},
 {"name":"Insertdisc5_noVisualOption","status":true,"description":"","parameters":{}},
-{"name":"ARP_TitleCommandExit","status":true,"description":"v1.00 Adds an option in the title command window to close\r\ngame window.","parameters":{"Command Exit":"\u0067\u006E\u002D\u006D\u0061\u0074\u0068","Show Exit":"true"}},
+{"name":"ARP_TitleCommandExit","status":true,"description":"v1.00 Adds an option in the title command window to close\r\ngame window.","parameters":{"Command Exit":"Quit","Show Exit":"true"}},
 {"name":"--------","status":false,"description":"","parameters":{}},
 {"name":"--[THE PLUGINS]--","status":false,"description":"","parameters":{}},
 {"name":"--------","status":false,"description":"","parameters":{}},

@@ -144,6 +144,8 @@ DataManager.onLoad = function(object) {
         }
     }
     if (object === $dataSystem) {
+        Decrypter.hasEncryptedImages = !!object.hasEncryptedImages;
+        Decrypter.hasEncryptedAudio = !!object.hasEncryptedAudio;
         Scene_Boot.loadSystemImages();
     }
 };
@@ -1176,16 +1178,37 @@ AudioManager.playBgm = function(bgm, pos) {
     } else {
         this.stopBgm();
         if (bgm.name) { 
-            this._bgmBuffer = this.createBuffer('bgm', bgm.name);
+            if(Decrypter.hasEncryptedAudio && this.shouldUseHtml5Audio()){
+                this.playEncryptedBgm(bgm, pos);
+            }
+            else {
+                this._bgmBuffer = this.createBuffer('bgm', bgm.name);
                 this.updateBgmParameters(bgm);
                 if (!this._meBuffer) {
                     this._bgmBuffer.play(true, pos || 0);
                 }
+            }
         }
     }
     this.updateCurrentBgm(bgm, pos);
 };
 
+AudioManager.playEncryptedBgm = function(bgm, pos) {
+    var ext = this.audioFileExt();
+    var url = this._path + 'bgm/' + encodeURIComponent(bgm.name) + ext;
+    url = Decrypter.extToEncryptExt(url);
+    Decrypter.decryptHTML5Audio(url, bgm, pos);
+};
+
+AudioManager.createDecryptBuffer = function(url, bgm, pos){
+    this._blobUrl = url;
+    this._bgmBuffer = this.createBuffer('bgm', bgm.name);
+    this.updateBgmParameters(bgm);
+    if (!this._meBuffer) {
+        this._bgmBuffer.play(true, pos || 0);
+    }
+    this.updateCurrentBgm(bgm, pos);
+};
 
 AudioManager.replayBgm = function(bgm) {
     if (this.isCurrentBgm(bgm)) {
@@ -1467,6 +1490,8 @@ AudioManager.audioFileExt = function() {
 };
 
 AudioManager.shouldUseHtml5Audio = function() {
+    // The only case where we wanted html5audio was android/ no encrypt
+    // Atsuma-ru asked to force webaudio there too, so just return false for ALL    // return Utils.isAndroidChrome() && !Decrypter.hasEncryptedAudio;
  return false;
 };
 
